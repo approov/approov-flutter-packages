@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:phoenix_wings/src/phoenix_message.dart';
 
 /// Responsible for serializing and deserializing messages

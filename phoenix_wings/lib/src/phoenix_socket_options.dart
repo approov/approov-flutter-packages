@@ -1,3 +1,5 @@
+// @dart=2.9
+
 /// Options for your socket
 class PhoenixSocketOptions {
   PhoenixSocketOptions({

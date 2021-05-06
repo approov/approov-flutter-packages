@@ -1,3 +1,5 @@
+// @dart=2.9
+
 library phoenix_wings;
 
 export 'src/phoenix_channel.dart';

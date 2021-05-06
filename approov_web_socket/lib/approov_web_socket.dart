@@ -1,3 +1,5 @@
+// @dart=2.9
+
 library approov_web_socket;
 
 import 'dart:async';
