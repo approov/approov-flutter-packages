@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:async';
 
 import 'package:phoenix_wings/src/phoenix_push.dart';
