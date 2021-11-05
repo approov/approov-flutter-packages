@@ -6,7 +6,9 @@ homepage: https://github.com/mfeckie/phoenix_wings
 
 dependencies:
   approov_web_socket:
-    path: ../approov_web_socket
+    git:
+      url: https://github.com/approov/approov-flutter-packages.git
+      path: approov_web_socket
 
 dev_dependencies:
   dartdoc: "0.28.3+2"
