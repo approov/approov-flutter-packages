@@ -11,7 +11,7 @@ import 'dart:math';
 
 import 'package:websocket/websocket.dart' show WebSocket, WebSocketStatus;
 
-import 'package:approov_http_client/approov_http_client.dart';
+import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 
 part 'crypto.dart';
 part 'http_impl.dart';
