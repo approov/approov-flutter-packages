@@ -10,4 +10,6 @@ environment:
 dependencies:
   # Talk to phoenix channels
   phoenix_wings:
-    path: ../phoenix_wings
+    git:
+      url: https://github.com/approov/approov-flutter-packages.git
+      path: phoenix_wings
