@@ -12,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   websocket: ^0.0.5
-  approov_http_client:
-    path: ../flutter-httpclient/approov_http_client
+  approov_service_flutter_httpclient:
+    git: https://github.com/approov/approov-service-flutter-httpclient.git
 
 dev_dependencies:
   flutter_test:
