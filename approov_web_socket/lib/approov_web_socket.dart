@@ -36,13 +36,14 @@ class ApproovCompressionOptions extends CompressionOptions {
   /// * `serverNoContextTakeover`: false
   /// * `clientMaxWindowBits`: null (default maximal window size of 15 bits)
   /// * `serverMaxWindowBits`: null (default maximal window size of 15 bits)
-  static const ApproovCompressionOptions compressionDefault = const ApproovCompressionOptions();
+  static const ApproovCompressionOptions compressionDefault =
+      const ApproovCompressionOptions();
 
   const ApproovCompressionOptions(
       {clientNoContextTakeover = false,
-        serverNoContextTakeover = false,
-        clientMaxWindowBits,
-        serverMaxWindowBits,
+      serverNoContextTakeover = false,
+      clientMaxWindowBits,
+      serverMaxWindowBits,
       enabled = false})
       : super(
             clientNoContextTakeover: clientNoContextTakeover,
@@ -58,15 +59,20 @@ class ApproovCompressionOptions extends CompressionOptions {
   /// value from headers. Defaults to [WebSocket.DEFAULT_WINDOW_BITS]. Returns a
   /// [_CompressionMaxWindowBits] object which contains the response headers and
   /// negotiated max window bits.
-  _CompressionMaxWindowBits _createServerResponseHeader(HeaderValue/*?*/ requested) {
+  _CompressionMaxWindowBits _createServerResponseHeader(
+      HeaderValue /*?*/ requested) {
     var info = new _CompressionMaxWindowBits("", 0);
 
-    String/*?*/ part = requested?.parameters == null ? null : requested.parameters[_serverMaxWindowBits];
+    String /*?*/ part = requested?.parameters == null
+        ? null
+        : requested.parameters[_serverMaxWindowBits];
     if (part != null) {
       if (part.length >= 2 && part.startsWith('0')) {
         throw new ArgumentError("Illegal 0 padding on value.");
       } else {
-        int mwb = serverMaxWindowBits ?? int.tryParse(part) ?? _ApproovWebSocketImpl.DEFAULT_WINDOW_BITS;
+        int mwb = serverMaxWindowBits ??
+            int.tryParse(part) ??
+            _ApproovWebSocketImpl.DEFAULT_WINDOW_BITS;
         info.headerValue = "; server_max_window_bits=${mwb}";
         info.maxWindowBits = mwb;
       }
@@ -78,7 +84,7 @@ class ApproovCompressionOptions extends CompressionOptions {
   }
 
   /// Returns default values for client compression request headers.
-  String _createClientRequestHeader(HeaderValue/*?*/ requested, int size) {
+  String _createClientRequestHeader(HeaderValue /*?*/ requested, int size) {
     var info = "";
 
     // If responding to a valid request, specify size
@@ -109,7 +115,7 @@ class ApproovCompressionOptions extends CompressionOptions {
   /// `server_max_window_bits` value.  This method returns a
   /// [_CompressionMaxWindowBits] object with the response headers and
   /// negotiated `maxWindowBits` value.
-  _CompressionMaxWindowBits _createHeader([HeaderValue/*?*/ requested]) {
+  _CompressionMaxWindowBits _createHeader([HeaderValue /*?*/ requested]) {
     var info = new _CompressionMaxWindowBits("", 0);
     if (!enabled) {
       return info;
@@ -118,12 +124,16 @@ class ApproovCompressionOptions extends CompressionOptions {
     info.headerValue = _ApproovWebSocketImpl.PER_MESSAGE_DEFLATE;
 
     if (clientNoContextTakeover &&
-        (requested == null || (requested != null && requested.parameters.containsKey(_clientNoContextTakeover)))) {
+        (requested == null ||
+            (requested != null &&
+                requested.parameters.containsKey(_clientNoContextTakeover)))) {
       info.headerValue += "; client_no_context_takeover";
     }
 
     if (serverNoContextTakeover &&
-        (requested == null || (requested != null && requested.parameters.containsKey(_serverNoContextTakeover)))) {
+        (requested == null ||
+            (requested != null &&
+                requested.parameters.containsKey(_serverNoContextTakeover)))) {
       info.headerValue += "; server_no_context_takeover";
     }
 
@@ -131,7 +141,8 @@ class ApproovCompressionOptions extends CompressionOptions {
     info.headerValue += headerList.headerValue;
     info.maxWindowBits = headerList.maxWindowBits;
 
-    info.headerValue += _createClientRequestHeader(requested, info.maxWindowBits);
+    info.headerValue +=
+        _createClientRequestHeader(requested, info.maxWindowBits);
 
     return info;
   }
@@ -140,19 +151,26 @@ class ApproovCompressionOptions extends CompressionOptions {
 // See WebSocket from package:websocket/websocket.dart
 class ApproovWebSocket extends _ApproovWebSocketImpl implements WebSocket {
   static Future<io.WebSocket> connect(String url,
-    {Iterable<String>/*?*/ protocols,
-    Map<String, dynamic>/*?*/ headers,
-    CompressionOptions compression = ApproovCompressionOptions.compressionDefault,
-    String approovHeader = ApproovService.APPROOV_HEADER}) =>
-      _ApproovWebSocketImpl.connect(url, protocols, headers, compression: compression, approovHeader: approovHeader);
+          {Iterable<String> /*?*/ protocols,
+          Map<String, dynamic> /*?*/ headers,
+          String configString,
+          CompressionOptions compression =
+              ApproovCompressionOptions.compressionDefault,
+          String approovHeader}) =>
+      _ApproovWebSocketImpl.connect(url, protocols, headers, configString,
+          compression: compression, approovHeader: approovHeader);
 }
 
 // See WebSocket from dart:io
-class ApproovIOWebSocket extends _ApproovWebSocketImpl /* implements io.WebSocket*/ {
+class ApproovIOWebSocket
+    extends _ApproovWebSocketImpl /* implements io.WebSocket*/ {
   static Future<io.WebSocket> connect(String url,
-    {Iterable<String>/*?*/ protocols,
-    Map<String, dynamic>/*?*/ headers,
-    CompressionOptions compression = ApproovCompressionOptions.compressionDefault,
-    String approovHeader = ApproovService.APPROOV_HEADER}) =>
-      _ApproovWebSocketImpl.connect(url, protocols, headers, compression: compression, approovHeader: approovHeader);
+          {Iterable<String> /*?*/ protocols,
+          Map<String, dynamic> /*?*/ headers,
+          String configString,
+          CompressionOptions compression =
+              ApproovCompressionOptions.compressionDefault,
+          String approovHeader}) =>
+      _ApproovWebSocketImpl.connect(url, protocols, headers, configString,
+          compression: compression, approovHeader: approovHeader);
 }

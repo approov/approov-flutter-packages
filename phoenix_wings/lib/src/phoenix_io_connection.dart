@@ -10,6 +10,9 @@ import 'package:approov_web_socket/approov_web_socket.dart';
 /// PhoenixIoConnection handles the creation and use
 /// of the underlying websocket connection on browser platforms.
 class PhoenixIoConnection extends PhoenixConnection {
+  // We use a custom Approov Header
+  static const String X_APPROOV_HEADER = "X-Approov-Token";
+
   Future<WebSocket> _connFuture;
   WebSocket _conn;
   final String _endpoint;
@@ -31,7 +34,8 @@ class PhoenixIoConnection extends PhoenixConnection {
   // waitForConnection is idempotent, it can be called many
   // times before or after the connection is established
   Future<PhoenixConnection> waitForConnection() async {
-    _connFuture ??= ApproovIOWebSocket.connect(_endpoint, approovHeader: ApproovService.X_APPROOV_HEADER);
+    _connFuture ??=
+        ApproovIOWebSocket.connect(_endpoint, approovHeader: X_APPROOV_HEADER);
     _conn = await _connFuture;
 
     return this;
