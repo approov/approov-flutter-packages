@@ -16,6 +16,8 @@ class PhoenixIoConnection extends PhoenixConnection {
   Future<WebSocket> _connFuture;
   WebSocket _conn;
   final String _endpoint;
+  // The ApproovSDk config string
+  String _configString;
 
   // Use completer for close event because:
   //  * onDone of WebSocket doesn't fire consistently :(
@@ -25,17 +27,17 @@ class PhoenixIoConnection extends PhoenixConnection {
   bool get isConnected => _conn?.readyState == WebSocket.open;
   int get readyState => _conn?.readyState ?? WebSocket.closed;
 
-  static PhoenixConnection provider(String endpoint) {
-    return new PhoenixIoConnection(endpoint);
+  static PhoenixConnection provider(String endpoint, String configString) {
+    return new PhoenixIoConnection(endpoint, configString);
   }
 
-  PhoenixIoConnection(this._endpoint);
+  PhoenixIoConnection(this._endpoint, this._configString);
 
   // waitForConnection is idempotent, it can be called many
   // times before or after the connection is established
   Future<PhoenixConnection> waitForConnection() async {
-    _connFuture ??=
-        ApproovIOWebSocket.connect(_endpoint, approovHeader: X_APPROOV_HEADER);
+    _connFuture ??= ApproovIOWebSocket.connect(_endpoint,
+        configString: _configString, approovHeader: X_APPROOV_HEADER);
     _conn = await _connFuture;
 
     return this;

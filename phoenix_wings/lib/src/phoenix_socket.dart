@@ -34,10 +34,13 @@ class PhoenixSocket {
   PhoenixSocketOptions _options = new PhoenixSocketOptions();
   PhoenixConnectionProvider _connectionProvider = PhoenixIoConnection.provider;
 
+  /// The ApproovSDK config String
+  String _configString;
+
   /// Creates an instance of PhoenixSocket
   ///
   /// endpoint is the full url to which you wish to connect e.g. `ws://localhost:4000/websocket/socket`
-  PhoenixSocket(String endpoint,
+  PhoenixSocket(String endpoint, String configString,
       {socketOptions: PhoenixSocketOptions,
       connectionProvider: PhoenixConnectionProvider}) {
     if (socketOptions is PhoenixSocketOptions) {
@@ -47,7 +50,7 @@ class PhoenixSocket {
     if (connectionProvider is PhoenixConnectionProvider) {
       _connectionProvider = connectionProvider;
     }
-
+    _configString = configString;
     _buildEndpoint(endpoint);
   }
 
@@ -91,7 +94,7 @@ class PhoenixSocket {
 
     for (int tries = 0; _conn == null; tries += 1) {
       try {
-        _conn = _connectionProvider(_endpoint.toString());
+        _conn = _connectionProvider(_endpoint.toString(), _configString);
         await _conn.waitForConnection();
       } catch (reason) {
         _conn = null;

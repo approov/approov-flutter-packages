@@ -2,7 +2,8 @@
 
 import 'dart:async';
 
-typedef PhoenixConnection PhoenixConnectionProvider(String endpoint);
+typedef PhoenixConnection PhoenixConnectionProvider(
+    String endpoint, String configString);
 
 abstract class PhoenixConnection {
   static const CLOSE_NORMAL = 1000;
