@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:phoenix_wings/src/phoenix_connection.dart';
-import 'package:approov_service_flutter_httpclient/approov_service_flutter_httpclient.dart';
 import 'package:approov_web_socket/approov_web_socket.dart';
 
 /// PhoenixIoConnection handles the creation and use

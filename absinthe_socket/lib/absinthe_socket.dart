@@ -41,7 +41,7 @@ class AbsintheSocket {
     print("onTimeout");
   }
 
-  AbsintheSocket(this.endpoint, {this.socketOptions}) {
+  AbsintheSocket(this.endpoint, String configString, {this.socketOptions}) {
     if (socketOptions == null) socketOptions = AbsintheSocketOptions();
     subscriptionHandler = NotifierPushHandler(
         onError: _onError,
@@ -51,7 +51,7 @@ class AbsintheSocket {
         onError: _onError,
         onTimeout: _onTimeout,
         onSucceed: _onUnsubscriptionSucceed);
-    _phoenixSocket = PhoenixSocket(endpoint,
+    _phoenixSocket = PhoenixSocket(endpoint, configString,
         socketOptions: PhoenixSocketOptions(
             params: socketOptions.params..addAll({"vsn": "2.0.0"})));
     _connect();
