@@ -846,7 +846,7 @@ class _ApproovWebSocketImpl extends Stream
       String configString,
       {CompressionOptions compression =
           ApproovCompressionOptions.compressionDefault,
-      String approovHeader}) {
+      String approovHeader}) async {
     Uri uri = Uri.parse(url);
     if (uri.scheme != "ws" && uri.scheme != "wss") {
       throw new WebSocketException("Unsupported URL scheme '${uri.scheme}'");
