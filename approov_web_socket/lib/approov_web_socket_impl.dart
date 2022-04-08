@@ -860,9 +860,9 @@ class _ApproovWebSocketImpl extends Stream
     }
     String nonce = _CryptoUtils.bytesToBase64(nonceData);
 
-    ApproovService.initialize(configString)
-    ApproovService.setApproovHeader(approovHeader, '')
-    ApproovHttpClient httpClient = ApproovHttpClient()
+    ApproovService.initialize(configString);
+    ApproovService.setApproovHeader(approovHeader, '');
+    ApproovHttpClient httpClient = ApproovHttpClient();
 
     uri = uri.replace(scheme: uri.scheme == "wss" ? "https" : "http");
     return httpClient.openUrl("GET", uri).then((request) {
