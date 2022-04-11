@@ -860,15 +860,11 @@ class _ApproovWebSocketImpl extends Stream
     }
     String nonce = _CryptoUtils.bytesToBase64(nonceData);
 
-    // Initialize Approov and fetch an Approov token - this will throw if a token cannot be fetched
-    ApproovService.initialize(configString);
-    ApproovHttpClient httpClient = ApproovHttpClient();
+    // Initialize an ApproovHttpClient ot open the connection pinned with an Approov token added (if the host domain is suitably
+    // configured using the Approov CLI) - this will throw if a token cannot be fetched
+    ApproovHttpClient httpClient = ApproovHttpClient(configString);
     uri = uri.replace(scheme: uri.scheme == "wss" ? "https" : "http");
-    String approovToken = await ApproovService.fetchApproovToken(uri.toString());
-
     return httpClient.openUrl("GET", uri).then((request) {
-      // Add the Approov token to show the authenticity of the upgrade request
-      request.headers.set(approovHeader, approovToken);
       // If the URL contains user information use that for basic authorization
       if (uri.userInfo != null && !uri.userInfo.isEmpty) {
         String auth = _CryptoUtils.bytesToBase64(utf8.encode(uri.userInfo));
