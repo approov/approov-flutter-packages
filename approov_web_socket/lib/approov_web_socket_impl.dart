@@ -87,7 +87,7 @@ class _WebSocketProtocolTransformer extends StreamTransformerBase<List<int>,
   int _remainingPayloadBytes = -1;
   int _unmaskingIndex = 0;
   int _currentMessageType = _WebSocketMessageType.NONE;
-  int closeCode = io.WebSocketStatus.NO_STATUS_RECEIVED;
+  int closeCode = io.WebSocketStatus.noStatusReceived;
   String closeReason = "";
 
   EventSink<
