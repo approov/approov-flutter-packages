@@ -64,7 +64,7 @@ class MockServer {
   }
 
   sendMessage(String msg) {
-    if (_socket.readyState != WebSocket.OPEN) {
+    if (_socket.readyState != WebSocket.open) {
       return;
     }
     _socket.add(msg);
