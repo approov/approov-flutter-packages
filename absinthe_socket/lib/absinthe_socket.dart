@@ -16,13 +16,13 @@ class AbsintheSocket {
   NotifierPushHandler unsubscriptionHandler;
 
   static _onError(Map response) {
-    print("onError");
+    print("---> Absinthe Socket GraphQL Subscription Error Response: ");
     print(response.toString());
   }
 
   static _onSubscriptionSucceed(Notifier notifier) {
     return (Map response) {
-      print("response");
+      print("---> Absinthe Socket GraphQL Subscription Response: ");
       print(response.toString());
       notifier.subscriptionId = response["subscriptionId"];
     };
@@ -30,7 +30,7 @@ class AbsintheSocket {
 
   _onUnsubscriptionSucceed(Notifier notifier) {
     return (Map response) {
-      print("unsubscription response");
+      print("---> Absinthe Socket GraphQL Unsubscription Response: ");
       print(response.toString());
       notifier.cancel();
       _notifiers.remove(notifier);
@@ -38,7 +38,8 @@ class AbsintheSocket {
   }
 
   static _onTimeout(Map response) {
-    print("onTimeout");
+    print("---> Absinthe Socket GraphQL connection timeout:");
+    print(response.toString());
   }
 
   AbsintheSocket(this.endpoint, String configString, {this.socketOptions}) {
